@@ -84,3 +84,35 @@ document.getElementById('downloadButton').addEventListener('click', () =>
     link.download = 'tasks.json';
     link.click();
 });
+document.getElementById('uploadButton').addEventListener('click', () =>
+{
+    document.getElementById('fileInput').click();
+});
+
+document.getElementById('fileInput').addEventListener('change', (event) =>
+{
+    const file = event.target.files[0];
+
+    if (file)
+    {
+        const reader = new FileReader();
+
+        reader.onload = function(e)
+        {
+            try
+            {
+                tasks = JSON.parse(e.target.result);
+                renderTasks();
+            }
+            
+            catch (error)
+            {
+                alert('Ошибка при загрузке файла: ' + error.message);
+            }
+        };
+
+        reader.readAsText(file);
+    }
+
+    event.target.value = '';
+});
